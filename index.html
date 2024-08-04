@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="favicon.ico">
+<title>WhoAmI</title>
+<style>
+
+.grayscale {
+	filter: grayscale(100%);
+}
+button {
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Grüne Farbe */
+    color: white; /* Weiße Schriftfarbe */
+    border: none; /* Keine Rahmen */
+    border-radius: 5px; /* Leicht abgerundete Ecken */
+    cursor: pointer; /* Cursor zeigt auf Hand */
+    font-size: 16px; /* Schriftgröße */
+}
+
+button:hover {
+    background-color: #45a049; /* Dunkleres Grün bei Hover */
+}
+
+.divbox{
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.scaling {
+  width: 231px;
+  height: 420px;
+}
+
+
+header {
+            background-color: #343434;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+a {
+	color: white;
+	text-decoration: none;
+}
+a:hover {
+	color: rgb(161, 150, 150);
+	text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+
+	<header>
+        <h1> <a href ="index.html"> League of Legends</a> . . . . . . <a href ="r6.html">Rainbow 6 Siege</a></h1>
+    </header>
+
+
+	<div>
+		<button onclick="generateRandomSeed()">Generate Random Seed</button>
+		<label for="seed">Enter seed:</label>
+		<input type="number" id="seed" name="seed" onchange="generateImages()">
+		<!-- <button onclick="generateImages()">Submit Seed</button>  -->
+	  </div>
+	  <div id="image-container" class="divbox"></div>
+	
+
+</body>
+
+<script src="lib/jquery-3.7.0.js"></script>
+<script>
+
+function seededRandom(seed) {
+  let m = 0x80000000; // 2**31
+  let a = 1103515245;
+  let c = 12345;
+  let state = seed ? seed : Math.floor(Math.random() * (m - 1));
+
+  return function() {
+    state = (a * state + c) % m;
+    return state / (m - 1);
+  };
+}
+
+function getRandomImages(seed) {
+  const totalImages = 168; // Images named from 1 to 12
+  const imagesToSelect = 24;
+  const imagePath = './icons/champs/';
+  const imageContainer = document.getElementById('image-container');
+
+  // Create an array with numbers from 1 to 12
+  let indices = Array.from({ length: totalImages }, (v, k) => k + 1);
+
+  // Initialize the seeded random number generator
+  let random = seededRandom(seed);
+
+  // Shuffle the array using Fisher-Yates algorithm with seeded random
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+
+  // Select the first 10 elements
+  const selectedIndices = indices.slice(0, imagesToSelect);
+
+  // Clear any existing images
+  imageContainer.innerHTML = '';
+
+  // Create and append image elements
+  selectedIndices.forEach(index => {
+    const img = document.createElement('img');
+    img.src = `${imagePath}ch (${index}).webp`; // Image names ch1.webp to ch12.webp
+    img.alt = `Image ch${index}`;
+    img.classList.add('scaling');
+
+    img.addEventListener('click', () => {
+      img.classList.toggle('grayscale');
+    });
+
+    imageContainer.appendChild(img);
+  });
+}
+
+function generateImages() {
+  const seedInput = document.getElementById('seed').value;
+  const seed = parseInt(seedInput);
+  if (!isNaN(seed)) {
+    getRandomImages(seed);
+  } else {
+    alert('Please enter a valid number for the seed.');
+  }
+}
+
+function generateRandomSeed() {
+  const randomSeed = Math.floor(Math.random() * 1000000);
+  document.getElementById('seed').value = randomSeed;
+  generateImages();
+}
+
+</script>
+
+</html>
