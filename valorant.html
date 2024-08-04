@@ -30,8 +30,8 @@ button:hover {
 }
 
 .scaling {
-  width: 231px;
-  height: 420px;
+  width: 176px;
+  height: 235px;
 }
 
 
@@ -64,9 +64,6 @@ a:hover {
 		<label for="seed">Enter seed:</label>
 		<input type="number" id="seed" name="seed" onchange="generateImages()">
 		<!-- <button onclick="generateImages()">Submit Seed</button>  -->
-    <button onclick="saveAmount()">Save Amount</button>
-		<label for="amount">Enter Amount:</label>
-		<input type="number" id="amount" name="amount" onchange="saveAmount()" value="24">
 
 
 
@@ -74,7 +71,7 @@ a:hover {
 	  <div id="image-container" class="divbox"></div>
 	
     <footer>
-      <p>This website isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+      <p>This website isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Valorant. Valorant and Riot Games are trademarks or registered trademarks of Riot Games, Inc. Valorant © Riot Games, Inc.</p>
     </footer>
 
 </body>
@@ -95,10 +92,10 @@ function seededRandom(seed) {
 }
 
 function getRandomImages(seed) {
-  const imageAmount = document.getElementById('amount').value;
-  const totalImages = 168; // Images named from 1 to 12
+  const imageAmount = 24
+  const totalImages = 24; // Images named from 1 to 12
   //const imagesToSelect = 24;
-  const imagePath = './icons/champs/';
+  const imagePath = './icons/valorant/';
   const imageContainer = document.getElementById('image-container');
 
   // Create an array with numbers from 1 to 12
